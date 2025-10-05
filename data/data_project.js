@@ -1,0 +1,51 @@
+export const projectsdata = [
+    {
+        _id: "1",
+        title: "aioverviews",
+        link: "https://aioverviews.ir",
+        description: "A personal portfolio website to showcase my work.",
+        imageUrl: "https://aioverviews.ir/logo.png",
+    },
+    {
+        _id: "2",
+        title: "mahogany",
+        link: "http://mahoganyacademy.de/",
+        description: "A weather forecast app using OpenWeatherMap API.",
+        imageUrl: "http://mahoganyacademy.de/logo.png",
+    },
+    {
+        _id: "3",
+        title: "tehranmu",
+        link: "https://tehranmu.de/",
+        description: "A full-stack blog platform with markdown support.",
+        imageUrl: "https://www.google.com/s2/favicons?sz=64&domain=tehranmu.de",
+    },
+    {
+        _id: "4",
+        title: "riahin",
+        link: "https://riahin.com/",
+        description: "A full-stack blog platform with markdown support.",
+        imageUrl: "https://riahin.com/logo.png",
+    },
+    {
+        _id: "5",
+        title: "iranrayeha",
+        link: "https://iranrayeha.com/",
+        description: "A full-stack blog platform with markdown support.",
+        imageUrl: "https://www.google.com/s2/favicons?sz=64&domain=iranrayeha.com",
+    },
+    {
+        _id: "6",
+        title: "parsianclinic",
+        link: "https://www.parsianclinic.de/",
+        description: "A full-stack blog platform with markdown support.",
+        imageUrl: "http://parsianclinic.de/logo.png",
+    },
+    {
+        _id: "7",
+        title: "wizardry",
+        link: "https://wizardry.ir/",
+        description: "A full-stack blog platform with markdown support.",
+        imageUrl: "http://wizardry.ir/logo.png",
+    },
+];

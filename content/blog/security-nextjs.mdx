@@ -1,0 +1,149 @@
+---
+title: "راهنمای جامع امنیت در Next.js"
+description: "در این مقاله به بررسی نکات کلیدی امنیتی در توسعه وب‌سایت‌های Next.js می‌پردازیم تا از اطلاعات کاربران محافظت شود و از آسیب‌پذیری‌های رایج جلوگیری گردد."
+publishedAt: "2025-10-03"
+tags: ["next.js", "امنیت", "توسعه وب", "OWASP", "xss", "csrf"]
+summary: How to create this website? Let's check out Readme for zephyrlin.me!
+image: /images/next-security.jpg
+author: Zephyr
+---
+
+## مقدمه
+
+امنیت همیشه یکی از اصلی‌ترین دغدغه‌های توسعه‌دهندگان وب بوده و هست. با افزایش روزافزون حملات سایبری و روش‌های پیچیده نفوذ، رعایت اصول امنیتی در فریم‌ورک‌های مدرن مثل **Next.js** اهمیت دوچندانی پیدا کرده است.
+
+در این مقاله به بررسی روش‌های تضمین امنیت در پروژه‌های ساخته‌شده با Next.js می‌پردازیم.
+
+---
+
+## ۱. جلوگیری از XSS (Cross-Site Scripting)
+
+XSS یکی از رایج‌ترین حملات وب است. در این نوع حمله، مهاجم کد مخربی را در وب‌سایت تزریق می‌کند تا در مرورگر کاربران اجرا شود.
+
+### چگونه در Next.js از XSS جلوگیری کنیم؟
+
+- هرگز از `dangerouslySetInnerHTML` استفاده نکن مگر اینکه صد درصد مطمئن باشی محتوا پاک‌سازی شده است.
+- برای نمایش محتوای Markdown یا HTML باید از کتابخانه‌هایی مثل `dompurify` استفاده کنی:
+
+```tsx
+import DOMPurify from "dompurify";
+
+const safeHtml = DOMPurify.sanitize(userGeneratedHtml);
+````
+
+---
+
+## ۲. CSRF (Cross-Site Request Forgery)
+
+در CSRF مهاجم کاربر را وادار به ارسال درخواست ناخواسته به سایت هدف می‌کند.
+
+### راه‌حل:
+
+* اگر از **API route** استفاده می‌کنی، مطمئن شو که فقط درخواست‌هایی با توکن CSRF معتبر پردازش می‌شوند.
+* استفاده از کتابخانه‌هایی مثل `@edgewell/csrf` یا `next-auth` (که توکن CSRF را مدیریت می‌کند) توصیه می‌شود.
+
+---
+
+## ۳. احراز هویت و مدیریت نشست‌ها
+
+در Next.js معمولا از `next-auth` برای احراز هویت استفاده می‌شود که از روش‌هایی مثل JWT و Sessions پشتیبانی می‌کند.
+
+### نکات مهم امنیتی:
+
+* از کوکی‌های با گزینه `HttpOnly` و `Secure` استفاده کن.
+* کوکی‌ها را با `SameSite=Lax` یا `Strict` تنظیم کن.
+* اطلاعات حساس را در **environment variable** قرار بده و هرگز در کلاینت نذار.
+
+---
+
+## ۴. جلوگیری از حملات SSRF / RCE
+
+در SSRF، مهاجم سعی می‌کند از طریق سرور شما به سیستم‌های دیگر دسترسی پیدا کند.
+
+### راه‌حل:
+
+* ورودی کاربران را پیش از استفاده در API یا درخواست‌های سمت سرور بررسی و پاک‌سازی کن.
+* از کتابخانه‌هایی استفاده کن که از این آسیب‌پذیری‌ها محافظت می‌کنند (مثل `axios` یا `node-fetch` با محدودیت URL).
+
+---
+
+## ۵. استفاده از CSP (Content Security Policy)
+
+CSP به مرورگر می‌گوید چه منابعی مجاز به اجرا هستند، و یکی از بهترین ابزارها برای جلوگیری از XSS است.
+
+### مثال:
+
+```http
+Content-Security-Policy: default-src 'self'; img-src *; script-src 'self'; style-src 'self' 'unsafe-inline'
+```
+
+در Next.js می‌تونی در فایل `next.config.js` این Header رو اضافه کنی:
+
+```js
+async headers() {
+  return [
+    {
+      source: "/(.*)",
+      headers: [
+        {
+          key: "Content-Security-Policy",
+          value: "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'",
+        },
+      ],
+    },
+  ];
+}
+```
+
+---
+
+## ۶. محدودسازی API Routes
+
+اگر اپلیکیشن شما API دارد، دسترسی‌ها را محدود کن. مثلا فقط کاربران لاگین کرده بتوانند به یک مسیر خاص دسترسی داشته باشند.
+
+```ts
+import { getServerSession } from "next-auth";
+
+export default async function handler(req, res) {
+  const session = await getServerSession(req, res, authOptions);
+
+  if (!session) {
+    return res.status(401).json({ error: "Unauthorized" });
+  }
+
+  // continue with logic...
+}
+```
+
+---
+
+## ۷. لاگ‌برداری و مانیتورینگ
+
+* استفاده از ابزارهایی مثل **Sentry** یا **LogRocket** برای مانیتورینگ خطاهای سمت کلاینت و سرور.
+* لاگ کردن تلاش‌های ورود ناموفق یا رفتارهای مشکوک.
+
+---
+
+## ۸. به‌روزرسانی منظم پکیج‌ها
+
+Next.js و پکیج‌های مرتبط رو همیشه بروز نگه‌دار تا آخرین آسیب‌پذیری‌ها پچ شده باشند.
+
+```bash
+npm outdated
+npm update
+```
+
+---
+
+## نتیجه‌گیری
+
+امنیت در Next.js تنها محدود به فریم‌ورک نیست، بلکه نیازمند درک عمیق‌تری از تهدیدات رایج و راه‌حل‌های آن‌هاست. با رعایت موارد بالا، می‌تونی یک اپلیکیشن امن و مقاوم در برابر حملات بسازی.
+
+---
+
+### منابع پیشنهادی:
+
+* [OWASP Top 10](https://owasp.org/www-project-top-ten/)
+* [Next.js Security Best Practices](https://nextjs.org/docs/advanced-features/security)
+* [MDN Web Docs - CSP](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP)
+
