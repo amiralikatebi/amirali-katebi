@@ -12,10 +12,10 @@ export const navigationItems = [
     name: "Project",
     href: "/project",
   },
-  // {
-  //   name: "News",
-  //   href: "/news",
-  // },
+  {
+    name: "News",
+    href: "/news",
+  },
   {
     name: "Blog",
     href: "/blog",
