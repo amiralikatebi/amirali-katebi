@@ -17,6 +17,10 @@ export const navigationItems = [
     href: "/news",
   },
   {
+    name: "Ai",
+    href: "/ai",
+  },
+  {
     name: "Blog",
     href: "/blog",
   },

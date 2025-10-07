@@ -1,4 +1,5 @@
-import NewsList from "@/components/NewsList"; // مطمئن شو مسیر درست است
+import { Suspense } from "react";
+import NewsList from "@/components/NewsList";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 3600;
@@ -16,11 +17,25 @@ async function fetchNews() {
     return JSON.parse(text);
   } catch (err) {
     console.error("API response is not valid JSON:", text);
-    return { news: [] }; // fallback
+    return { news: [] };
   }
 }
 
-export default async function NewsPage() {
+async function NewsContent() {
   const data = await fetchNews();
   return <NewsList initialNews={data.news || []} />;
+}
+
+export default function NewsPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex items-center justify-center h-64">
+          <p className="text-lg text-gray-500 animate-pulse">Loading...</p>
+        </div>
+      }
+    >
+      <NewsContent />
+    </Suspense>
+  );
 }
