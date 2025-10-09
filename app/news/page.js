@@ -1,6 +1,6 @@
 import NewsList from "@/components/NewsList";
 
-export const revalidate = 3600;
+export const revalidate = 60;
 
 const BASE_URL =
   process.env.NODE_ENV === "production"
@@ -8,16 +8,11 @@ const BASE_URL =
     : "http://localhost:3000";
 
 async function fetchNews() {
-  const res = await fetch(`${BASE_URL}/api/news`, {
-    cache: "force-cache",
-  });
-
-  const text = await res.text();
-
   try {
-    return JSON.parse(text);
-  } catch (err) {
-    console.error("API response is not valid JSON:", text);
+    const res = await fetch(`${BASE_URL}/api/news`, { next: { revalidate: 60 } });
+    if (!res.ok) return { news: [] };
+    return res.json();
+  } catch {
     return { news: [] };
   }
 }
