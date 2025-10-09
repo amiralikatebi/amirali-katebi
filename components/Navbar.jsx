@@ -60,7 +60,7 @@ export default function Navbar({ page }) {
                     whileHover={{
                       backgroundColor: "#f2f2f20d",
                     }}
-                    className={`px-4 py-3 rounded-full ${item.name != "Home" && item.name != "Blog" && item.name != "About" ? "tracking-tight" : "tracking-widest"} font-bold text-sm`}
+                    className={`px-4 py-3 rounded-full ${item.name != "Home" && item.name != "Blog" && item.name != "About" && item.name != "news" && item.name != "ai" && item.name != "donate" && item.name != "project" ? "tracking-tight" : "tracking-widest"} font-bold text-sm`}
                   >
                     {item.name}
                   </motion.div>

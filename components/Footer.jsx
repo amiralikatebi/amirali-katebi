@@ -6,7 +6,6 @@ export default function Footer() {
         <p>
           &copy; {new Date().getFullYear()} Amirali Katebi. All rights reserved.
         </p>
-        {/* <div className=" opacity-90">Made with love and 🍰</div> */}
       </div>
     </div>
   );

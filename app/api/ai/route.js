@@ -12,7 +12,7 @@ export async function POST(req) {
     const completion = await client.chat.completions.create({
       model: "glm-4.5-flash",
       messages: [
-        { role: "system", content: "دستیار هوش مصنوعی برای آقای امیرعلی کاتبی هستی." },
+        { role: "system", content: "دستیار هوش مصنوعی برای امیرعلی کاتبی هستی." },
         { role: "user", content: message },
       ],
       thinking: {},

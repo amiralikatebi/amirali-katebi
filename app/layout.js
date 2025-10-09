@@ -11,9 +11,29 @@ import { Toaster } from "sonner";
 const roboto_mono = Roboto_Mono({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Amirali Katebi | Developer",
+  title: "Amirali Katebi",
   description:
     "Hi, I'm Amirali Katebi, a front-end and back-end developer currently working at Parspardaz. I am passionate about building software that blends functionality with enjoyable user experiences.",
+  keywords: [
+    "Amirali Katebi",
+    "امیرعلی کاتبی",
+    "Full Stack Developer",
+    "Front-end Developer",
+    "Back-end Developer",
+    "JavaScript",
+    "React",
+    "Next.js",
+    "Node.js",
+  ],
+  authors: [{ name: "Amirali Katebi" }],
+  creator: "امیرعلی کاتبی",
+  openGraph: {
+    title: "Amirali Katebi | Full-Stack Developer",
+    description:
+      "Portfolio of Amirali Katebi, a full-stack developer creating efficient and enjoyable web experiences.",
+    url: "https://amirali-katebi.ir",
+    siteName: "Amirali Katebi",
+  },
 };
 
 export default function RootLayout({ children }) {

@@ -54,7 +54,7 @@ export default function Ai() {
   };
 
   return (
-    <div className="flex flex-col w-full gap-5 lg:w-2/3 mx-auto mt-10 h-[100%]">
+    <div className="flex flex-col w-full gap-5 lg:w-2/3 mx-auto mt-10">
       <h1 className="text-2xl font-semibold text-center">💬 AI Chat</h1>
 
       <div className="flex flex-col gap-4 p-4 bg-muted rounded-xl max-h-[420px] min-h-[420px] overflow-y-auto &::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">

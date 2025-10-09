@@ -8,9 +8,6 @@ export default function Avatar({ page }) {
   return (
     <div className="flex items-center justify-start col-span-1">
       <Link href="/">
-        {/* <div className="items-center justify-center text-3xl font-bold opacity-50 hover:opacity-90">
-          ZL
-        </div> */}
 
         <div className="flex flex-col items-start justify-end">
           <Image
