@@ -11,7 +11,7 @@ const localization = {
   signIn: {
     start: {
       title: "Welcome Back",
-      subtitle: "Sign in to zephrlin.me",
+      subtitle: "Sign in to amiralikatebi.ir",
     },
   },
 };
