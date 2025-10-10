@@ -2,10 +2,7 @@ import NewsList from "@/components/NewsList";
 
 export const revalidate = 60;
 
-const BASE_URL =
-  process.env.NODE_ENV === "production"
-    ? "https://amiralikatebi.ir"
-    : "http://localhost:3000";
+const BASE_URL = "https://amiralikatebi.ir";
 
 async function fetchNews() {
   try {
