@@ -1,12 +1,10 @@
 import NewsList from "@/components/NewsList";
 
-export const revalidate = 60;
-
 const BASE_URL = "https://amiralikatebi.ir";
 
 async function fetchNews() {
   try {
-    const res = await fetch(`${BASE_URL}/api/news`, { next: { revalidate: 60 } });
+    const res = await fetch(`${BASE_URL}/api/news`, { cache: "no-store" });
     if (!res.ok) return { news: [] };
     return res.json();
   } catch {
