@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-function daysAgo(dateString: string) {
+function daysAgo(dateString) {
   const updateDate = new Date(dateString);
   const now = new Date();
   const diffTime = now.getTime() - updateDate.getTime();
