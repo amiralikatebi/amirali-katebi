@@ -7,6 +7,7 @@ const BASE_URL = "https://amiralikatebi.ir";
 
 export default function NewsPage() {
   const [news, setNews] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   async function fetchNews() {
     try {
@@ -21,8 +22,11 @@ export default function NewsPage() {
   }
 
   useEffect(() => {
-    fetchNews().then(setNews);
+    fetchNews().then((data) => {
+      setNews(data);
+      setLoading(false);
+    });
   }, []);
 
-  return <NewsList initialNews={news} />;
+  return <NewsList initialNews={news} loading={loading} />;
 }
