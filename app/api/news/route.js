@@ -29,7 +29,15 @@ export async function GET() {
 
     allPosts.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
 
-    return NextResponse.json({ news: allPosts.slice(0, 50) });
+    return NextResponse.json(
+      { news: allPosts.slice(0, 50) },
+      {
+        status: 200,
+        headers: {
+          "Cache-Control": "no-store, max-age=0, no-cache, must-revalidate",
+        },
+      }
+    );
   } catch (err) {
     return NextResponse.json({ error: err.message }, { status: 500 });
   }
