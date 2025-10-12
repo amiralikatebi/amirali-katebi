@@ -1,5 +1,3 @@
-"use client";
-
 import { useState, useRef, useEffect } from "react";
 import { Loader2 } from "lucide-react";
 
@@ -9,10 +7,16 @@ export default function Ai() {
   ]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
-  const messagesEndRef = useRef(null);
 
+  // اینجا ref جدید برای کانتینر پیام‌ها:
+  const messagesContainerRef = useRef(null);
+
+  // تابع اسکرول به پایین فقط برای div پیام‌ها:
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    const container = messagesContainerRef.current;
+    if (container) {
+      container.scrollTop = container.scrollHeight;
+    }
   };
 
   useEffect(() => {
@@ -57,7 +61,10 @@ export default function Ai() {
     <div className="flex flex-col w-full gap-5 lg:w-2/3 mx-auto mt-10">
       <h1 className="text-2xl font-semibold text-center">💬 AI Chat</h1>
 
-      <div className="flex flex-col gap-4 p-4 bg-muted rounded-xl max-h-[420px] min-h-[420px] overflow-y-auto &::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+      <div
+        ref={messagesContainerRef} // اضافه کردن رفرنس به div پیام‌ها
+        className="flex flex-col gap-4 p-4 bg-muted rounded-xl max-h-[420px] min-h-[420px] overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
+      >
         {messages.map((msg, idx) => (
           <div
             key={idx}
@@ -80,7 +87,6 @@ export default function Ai() {
             <Loader2 className="w-4 h-4 mr-2 animate-spin" /> Thinking...
           </div>
         )}
-        <div ref={messagesEndRef} />
       </div>
 
       <form
