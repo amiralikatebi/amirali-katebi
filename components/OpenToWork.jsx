@@ -23,12 +23,13 @@ export default function OpenToWork() {
       <div className="pl-2 border-l-4 border-green-400 text-sm text-muted-foreground">
         <ul className="list-disc list-inside space-y-1">
           <li>Added AI Assistant</li>
+          <li>Added Movie</li>
           <li>Fixed reported bugs</li>
         </ul>
       </div>
       <div className="mt-4 text-xs text-gray-400">
         <p>Version 1.0.1</p>
-        <p>Update date: 2025/10/9 ({days} {days === 1 ? "day" : "days"} ago)</p>
+        <p>Update date: 2025/10/12 ({days} {days === 1 ? "day" : "days"} ago)</p>
       </div>
     </div>
   );

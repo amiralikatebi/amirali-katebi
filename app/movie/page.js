@@ -37,12 +37,12 @@ export default function MoviePage() {
 
   return (
     <section className="p-6 max-w-5xl mx-auto">
-      <ul className="space-y-6">
+      <ul className="space-y-8">
         {movies.map((movie, idx) => {
           const isMovieExpanded = expandedMovie === idx;
 
           return (
-            <li key={idx} className="border rounded-2xl p-4 shadow hover:shadow-lg transition cursor-pointer">
+            <li key={idx} className="border rounded-2xl p-6 shadow hover:shadow-lg transition cursor-pointer bg-white dark:bg-gray-800">
               <div
                 className="flex items-center gap-6"
                 onClick={() => {
@@ -57,53 +57,70 @@ export default function MoviePage() {
                   }
                 }}
               >
-                <div className="relative w-24 h-32 flex-shrink-0 rounded overflow-hidden shadow">
+                <div className="relative w-28 h-40 flex-shrink-0 rounded-lg overflow-hidden shadow-lg">
                   <Image
-                    src={movie.url}
+                    src={movie.banner}
                     alt={movie.name}
                     fill
                     className="object-cover"
-                    sizes="96px"
+                    sizes="112px"
+                    priority={idx === 0}
                   />
                 </div>
-                <div className="flex flex-col justify-center">
-                  <h2 className="text-xl font-semibold">{movie.name}</h2>
-                  <div className="flex items-center gap-2 mt-1 text-yellow-600">
+                <div className="flex flex-col justify-center flex-1">
+                  <h2 className="text-2xl font-semibold text-gray-900 dark:text-gray-100">
+                    {movie.name}
+                  </h2>
+                  <div className="flex items-center gap-2 mt-2 text-yellow-500">
                     <IMDbIcon />
-                    <span className="font-medium">{movie.imdb}</span>
+                    <span className="font-semibold">{movie.imdb}</span>
                   </div>
+                  <p className="mt-3 text-gray-700 dark:text-gray-300 text-sm">
+                    Type: <span className="capitalize">{movie.type}</span>
+                  </p>
                 </div>
               </div>
 
               {isMovieExpanded && (
-                <div className="mt-6 pl-1">
+                <div className="mt-8 pl-2">
                   {movie.seasons.map((season) => {
                     const isSeasonExpanded = expandedSeason === season.season_number;
                     return (
-                      <div key={season.season_number} className="mb-4">
+                      <div
+                        key={season.season_number}
+                        className="mb-6 border rounded-lg border-gray-300 dark:border-gray-600"
+                      >
                         <button
-                          className="font-semibold text-lg text-left w-full flex justify-between items-center py-2 px-4 bg-gray-100 rounded hover:bg-gray-200"
+                          className="w-full flex justify-between items-center px-6 py-3 text-lg font-semibold bg-gray-100 dark:bg-gray-700 rounded-t-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition"
                           onClick={() =>
                             setExpandedSeason(
                               isSeasonExpanded ? null : season.season_number
                             )
                           }
+                          aria-expanded={isSeasonExpanded}
                         >
                           <span>Season {season.season_number}</span>
-                          <span>{isSeasonExpanded ? '-' : '+'}</span>
+                          <span className="text-2xl font-bold select-none">
+                            {isSeasonExpanded ? '−' : '+'}
+                          </span>
                         </button>
 
                         {isSeasonExpanded && (
-                          <ul className="mt-2 space-y-2 max-h-64 overflow-y-auto">
+                          <ul className="max-h-72 overflow-y-auto px-6 py-4 space-y-3 bg-white dark:bg-gray-800 rounded-b-lg">
                             {season.episodes.map((episode) => {
-                              const isPlaying = playingUrl === episode.url[0].quality['720p'];
+                              const episodeUrl = episode.url[0].quality['720p'];
+                              const isPlaying = playingUrl === episodeUrl;
                               return (
-                                <li key={episode.episode_number} className="pl-4">
+                                <li key={episode.episode_number} className="flex flex-col">
                                   <button
-                                    className="text-blue-600 hover:underline flex items-center gap-2"
-                                    onClick={() => setPlayingUrl(episode.url[0].quality['720p'])}
+                                    className={`flex items-center justify-between text-blue-600 dark:text-blue-400 hover:underline font-medium text-sm ${
+                                      isPlaying ? 'underline' : ''
+                                    }`}
+                                    onClick={() => setPlayingUrl(episodeUrl)}
                                   >
-                                    Episode {episode.episode_number} - {episode.title}
+                                    <span>
+                                      Episode {episode.episode_number} - {episode.title}
+                                    </span>
                                     <ExternalLink className="w-4 h-4" />
                                   </button>
 
@@ -112,7 +129,7 @@ export default function MoviePage() {
                                       src={playingUrl}
                                       controls
                                       autoPlay
-                                      className="mt-2 rounded-md w-full max-w-full aspect-video bg-black"
+                                      className="mt-3 rounded-md w-full max-w-full aspect-video bg-black shadow-lg"
                                     />
                                   )}
                                 </li>
