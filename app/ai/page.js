@@ -8,10 +8,8 @@ export default function Ai() {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // اینجا ref جدید برای کانتینر پیام‌ها:
   const messagesContainerRef = useRef(null);
 
-  // تابع اسکرول به پایین فقط برای div پیام‌ها:
   const scrollToBottom = () => {
     const container = messagesContainerRef.current;
     if (container) {
@@ -58,11 +56,11 @@ export default function Ai() {
   };
 
   return (
-    <div className="flex flex-col w-full gap-5 lg:w-2/3 mx-auto mt-10">
+    <div className="flex flex-col w-full gap-5 lg:w-2/3 mx-auto">
       <h1 className="text-2xl font-semibold text-center">💬 AI Chat</h1>
 
       <div
-        ref={messagesContainerRef} // اضافه کردن رفرنس به div پیام‌ها
+        ref={messagesContainerRef}
         className="flex flex-col gap-4 p-4 bg-muted rounded-xl max-h-[420px] min-h-[420px] overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
       >
         {messages.map((msg, idx) => (
