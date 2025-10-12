@@ -1,8 +1,7 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
 import { ExternalLink } from 'lucide-react';
 
 const IMDbIcon = () => (
@@ -23,72 +22,112 @@ const IMDbIcon = () => (
 );
 
 export default function MoviePage() {
-  const [movies, setMovies] = useState([]);
+  const [movies, setMovies] = useState(null);
+  const [expandedMovie, setExpandedMovie] = useState(null);
+  const [expandedSeason, setExpandedSeason] = useState(null);
+  const [playingUrl, setPlayingUrl] = useState(null);
 
-  useEffect(() => {
+  React.useEffect(() => {
     fetch('/movie.json')
       .then((res) => res.json())
-      .then((data) => {
-        setMovies(data.movies);
-      });
+      .then((data) => setMovies(data.movies));
   }, []);
 
+  if (!movies) return null;
+
   return (
-    <section className="p-6">
-      <ul className="grid w-full grid-cols-1 gap-5 mx-auto sm:grid-cols-2 xl:grid-cols-3">
-        {movies.map((movie, idx) => (
-          <li key={idx}>
-            <div className="relative flex flex-col items-start justify-center gap-6 p-5 border-dashed border-[0.8px] border-transparent rounded-2xl hover:border-muted-foreground hover:bg-muted">
-              <div className="relative flex items-center justify-center w-12 h-12 shadow-[0_0px_3px_rgb(180,180,180)] rounded-full overflow-hidden">
-                <Image
-                  src={movie.url}
-                  alt={movie.name}
-                  width={48}
-                  height={48}
-                  className="object-cover"
-                />
-              </div>
+    <section className="p-6 max-w-5xl mx-auto">
+      <ul className="space-y-6">
+        {movies.map((movie, idx) => {
+          const isMovieExpanded = expandedMovie === idx;
 
-              <div>
-                <h2 className="mb-2 font-semibold">{movie.name}</h2>
-                <p className="text-sm font-light text-muted-foreground">
-                  Type: {movie.type}
-                </p>
-
-                <div className="flex items-center gap-2 mt-1 text-sm text-yellow-600">
-                  <IMDbIcon />
-                  <span className="font-medium">{movie.imdb}</span>
+          return (
+            <li key={idx} className="border rounded-2xl p-4 shadow hover:shadow-lg transition cursor-pointer">
+              <div
+                className="flex items-center gap-6"
+                onClick={() => {
+                  if (expandedMovie === idx) {
+                    setExpandedMovie(null);
+                    setExpandedSeason(null);
+                    setPlayingUrl(null);
+                  } else {
+                    setExpandedMovie(idx);
+                    setExpandedSeason(null);
+                    setPlayingUrl(null);
+                  }
+                }}
+              >
+                <div className="relative w-24 h-32 flex-shrink-0 rounded overflow-hidden shadow">
+                  <Image
+                    src={movie.url}
+                    alt={movie.name}
+                    fill
+                    className="object-cover"
+                    sizes="96px"
+                  />
+                </div>
+                <div className="flex flex-col justify-center">
+                  <h2 className="text-xl font-semibold">{movie.name}</h2>
+                  <div className="flex items-center gap-2 mt-1 text-yellow-600">
+                    <IMDbIcon />
+                    <span className="font-medium">{movie.imdb}</span>
+                  </div>
                 </div>
               </div>
 
-              <div className="w-full">
-                {movie.seasons.map((season) => (
-                  <div key={season.season_number} className="mb-4">
-                    <h3 className="font-medium mb-2">
-                      Season {season.season_number}
-                    </h3>
-                    <ul className="space-y-2">
-                      {season.episodes.map((episode) => (
-                        <li key={episode.episode_number}>
-                          <Link
-                            href={episode.url[0].quality['720p']}
-                            target="_blank"
-                            className="flex items-center gap-2 text-sm text-blue-600 hover:underline"
-                          >
-                            <span>
-                              Episode {episode.episode_number} - {episode.title}
-                            </span>
-                            <ExternalLink className="size-4" />
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </li>
-        ))}
+              {isMovieExpanded && (
+                <div className="mt-6 pl-1">
+                  {movie.seasons.map((season) => {
+                    const isSeasonExpanded = expandedSeason === season.season_number;
+                    return (
+                      <div key={season.season_number} className="mb-4">
+                        <button
+                          className="font-semibold text-lg text-left w-full flex justify-between items-center py-2 px-4 bg-gray-100 rounded hover:bg-gray-200"
+                          onClick={() =>
+                            setExpandedSeason(
+                              isSeasonExpanded ? null : season.season_number
+                            )
+                          }
+                        >
+                          <span>Season {season.season_number}</span>
+                          <span>{isSeasonExpanded ? '-' : '+'}</span>
+                        </button>
+
+                        {isSeasonExpanded && (
+                          <ul className="mt-2 space-y-2 max-h-64 overflow-y-auto">
+                            {season.episodes.map((episode) => {
+                              const isPlaying = playingUrl === episode.url[0].quality['720p'];
+                              return (
+                                <li key={episode.episode_number} className="pl-4">
+                                  <button
+                                    className="text-blue-600 hover:underline flex items-center gap-2"
+                                    onClick={() => setPlayingUrl(episode.url[0].quality['720p'])}
+                                  >
+                                    Episode {episode.episode_number} - {episode.title}
+                                    <ExternalLink className="w-4 h-4" />
+                                  </button>
+
+                                  {isPlaying && (
+                                    <video
+                                      src={playingUrl}
+                                      controls
+                                      autoPlay
+                                      className="mt-2 rounded-md w-full max-w-full aspect-video bg-black"
+                                    />
+                                  )}
+                                </li>
+                              );
+                            })}
+                          </ul>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </li>
+          );
+        })}
       </ul>
     </section>
   );
