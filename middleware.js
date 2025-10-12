@@ -2,12 +2,12 @@ import { NextResponse } from "next/server";
 import { getAuth } from "@clerk/nextjs/server";
 
 export function middleware(req) {
-  const { userId } = getAuth(req);
-
-  // اینجا فقط وضعیت لاگین رو چک می‌کنیم (مثلاً برای لاگ گرفتن یا منطق دیگه)
-  // ولی اجازه میدیم همیشه ادامه بده بدون هیچ ریدایرکتی
-  // اگر خواستی می‌تونی اینجا لاگ بزنی یا داده‌هایی تو req بگذاری
-
+  try {
+    const { userId } = getAuth(req);
+    console.log("User ID:", userId); // برای دیباگ
+  } catch (error) {
+    console.error("Middleware error:", error);
+  }
   return NextResponse.next();
 }
 
