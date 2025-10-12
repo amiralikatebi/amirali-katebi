@@ -1,15 +1,20 @@
+import { clerkMiddleware, auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
-import { getAuth } from "@clerk/nextjs/server";
 
-export function middleware(req) {
-  try {
-    const { userId } = getAuth(req);
-    console.log("User ID:", userId); // برای دیباگ
-  } catch (error) {
-    console.error("Middleware error:", error);
+export default clerkMiddleware(
+  async (req) => {
+    try {
+      const { userId } = await auth();
+      console.log("User ID in middleware:", userId);
+      // هیچ ریدایرکتی انجام نمیشه حتی اگر userId وجود نداشته باشه
+      return NextResponse.next();
+    } catch (error) {
+      console.error("Middleware error:", error);
+      // خطا رو می‌گیریم ولی جلوش رو می‌گیریم و اجازه می‌دیم درخواست ادامه پیدا کنه
+      return NextResponse.next();
+    }
   }
-  return NextResponse.next();
-}
+);
 
 export const config = {
   matcher: [
