@@ -3,6 +3,7 @@
         {
             "name": "Mr. Robot 2015",
             "type": "serial",
+            "imdb": "8.6",
             "url": "https://img.uptvs.com/uploads/2020/07/Mr-Robot-s4-poster-207x290.jpg",
             "seasons": [
                 {
@@ -11,7 +12,6 @@
                         {
                             "episode_number": 1,
                             "title": "قسمت 1",
-                            "imdb": "8.6",
                             "url": [
                                 {
                                     "quality": {

@@ -21,6 +21,10 @@ export const navigationItems = [
     href: "/ai",
   },
   {
+    name: "Movie",
+    href: "/movie",
+  },
+  {
     name: "Blog",
     href: "/blog",
   },
