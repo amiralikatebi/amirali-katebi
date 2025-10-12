@@ -10,8 +10,8 @@ import { Skeleton } from "@/components/ui/skeleton";
 import OpenToWork from "@/components/OpenToWork";
 
 export default async function Page() {
-  const blogs = await getBlogs();
-  const recentBlogs = blogs.slice(0, 3);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/github`);
+  const projects = res.ok ? await res.json() : [];
 
   return (
     <MotionDivWrapper
@@ -26,7 +26,7 @@ export default async function Page() {
 
       <section className="relative flex flex-col justify-between w-full gap-10 lg:flex-row">
         <div className="w-full">
-          <RecentUpdate blogs={recentBlogs} isHome={true} />
+          <RecentUpdate projects={projects} isHome={true} />
         </div>
 
         <aside className="lg:w-[680px] w-full lg:sticky lg:h-fit lg:-top-10 flex flex-col gap-12 rounded-2xl ">

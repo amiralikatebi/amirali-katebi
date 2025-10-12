@@ -17,16 +17,16 @@ export const navigationItems = [
     href: "/news",
   },
   {
+    name: "Github",
+    href: "/github",
+  },
+  {
     name: "Ai",
     href: "/ai",
   },
   {
     name: "Movie",
     href: "/movie",
-  },
-  {
-    name: "Blog",
-    href: "/blog",
   },
   {
     name: "Message",

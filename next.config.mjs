@@ -5,6 +5,7 @@ const nextConfig = {
       { hostname: "img.clerk.com" },
       { hostname: "cdn.sanity.io" },
       { hostname: "i.scdn.co" },
+      { hostname: "avatars.githubusercontent.com" },
     ],
     domains: [
       'aioverviews.ir',
@@ -15,6 +16,7 @@ const nextConfig = {
       'parsianclinic.de',
       'wizardry.ir',
       'www.google.com',
+      'avatars.githubusercontent.com',
     ],
   },
   pageExtensions: ["js", "jsx", "mdx"],

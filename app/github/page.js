@@ -1,5 +1,6 @@
-import Blogs from "@/components/Blogs";
+
 import Description from "@/components/Description";
+import Github from "@/components/Github";
 import MotionDivWrapper from "@/components/MotionDivWrapper";
 import { getBlogs } from "@/lib/blog";
 
@@ -13,8 +14,8 @@ export default async function BlogPage() {
       transition={{ duration: 2 }}
       className="flex flex-col gap-10 "
     >
-      <Description page="Blog" description="" />
-      <Blogs blogs={blogs} />
+      <Description page="github" description="" />
+      <Github blogs={blogs} />
     </MotionDivWrapper>
   );
 }
