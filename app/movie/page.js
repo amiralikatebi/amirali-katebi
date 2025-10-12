@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { ExternalLink } from 'lucide-react';
 
@@ -27,7 +27,7 @@ export default function MoviePage() {
   const [expandedSeason, setExpandedSeason] = useState(null);
   const [playingUrl, setPlayingUrl] = useState(null);
 
-  React.useEffect(() => {
+  useEffect(() => {
     fetch('/movie.json')
       .then((res) => res.json())
       .then((data) => setMovies(data.movies));
