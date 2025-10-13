@@ -20,7 +20,7 @@ export default function RecentUpdate({ projects = [] }) {
     <div className="mt-10">
       <div className="flex items-center justify-start w-full gap-3 mb-10">
         <Newspaper className="w-6 h-6" />
-        <span className="text-lg font-semibold">Recent Update</span>
+        <span className="text-lg font-semibold">Recent Github</span>
       </div>
 
       <ul className="grid w-full grid-cols-1 gap-10">
