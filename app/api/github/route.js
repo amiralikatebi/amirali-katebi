@@ -1,28 +1,35 @@
 let cache = null;
 let cacheTime = 0;
-const CACHE_DURATION = 10 * 60 * 1000;
+const CACHE_DURATION = 10 * 60 * 1000; // 10 دقیقه
 
 export async function GET() {
   const now = Date.now();
+
   if (cache && now - cacheTime < CACHE_DURATION) {
     return new Response(JSON.stringify(cache), { status: 200 });
   }
 
   try {
-    const query = 'react+nextjs+python+javascript+pushed:>2024-04-01';
-    const url = `https://api.github.com/search/repositories?q=${encodeURIComponent(query)}&sort=stars&order=desc&per_page=20`;
-
-    const response = await fetch(url);
+    const response = await fetch(
+      'https://api.github.com/search/repositories?q=nextjs+pushed:>2024-04-01&sort=stars&order=desc&per_page=20',
+      {
+        headers: {
+          'User-Agent': 'MyApp',
+          Accept: 'application/vnd.github+json',
+        },
+      }
+    );
 
     if (!response.ok) {
-      return new Response(JSON.stringify({ message: 'Error fetching data from GitHub' }), {
-        status: response.status,
-      });
+      return new Response(
+        JSON.stringify({ message: 'Error fetching data from GitHub' }),
+        { status: response.status }
+      );
     }
 
     const data = await response.json();
 
-    const projects = data.items.map(repo => ({
+    const projects = data.items.map((repo) => ({
       id: repo.id,
       full_name: repo.full_name,
       description: repo.description,
