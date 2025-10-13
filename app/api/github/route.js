@@ -1,15 +1,4 @@
-
-let cachedData = null;
-let cacheTime = 0;
-const CACHE_DURATION = 1000 * 60 * 60;
-
 export async function GET() {
-  const now = Date.now();
-
-  if (cachedData && now - cacheTime < CACHE_DURATION) {
-    return new Response(JSON.stringify(cachedData), { status: 200 });
-  }
-
   try {
     const response = await fetch(
       'https://api.github.com/search/repositories?q=nextjs+pushed:>2024-04-01&sort=stars&order=desc&per_page=20'
@@ -36,9 +25,6 @@ export async function GET() {
         html_url: repo.owner.html_url,
       },
     }));
-
-    cachedData = projects;
-    cacheTime = now;
 
     return new Response(JSON.stringify(projects), { status: 200 });
   } catch (error) {
