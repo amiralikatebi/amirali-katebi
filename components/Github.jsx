@@ -42,46 +42,44 @@ export default function Github() {
         {projects.map((proj) => (
           <li
             key={proj.id}
-            className="p-6 rounded-xl shadow-md hover:shadow-lg transition duration-300 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 max-w-full overflow-hidden break-words"
+            className="p-6 rounded-xl shadow-md hover:shadow-lg transition duration-300 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700"
           >
+            {/* عنوان پروژه */}
             <a
               href={proj.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-xl font-semibold text-blue-600 hover:underline block max-w-full overflow-hidden break-words"
+              className="text-xl font-semibold text-blue-600 hover:underline block"
               style={{
-                display: '-webkit-box',
-                WebkitLineClamp: 2,
-                WebkitBoxOrient: 'vertical',
-                overflow: 'hidden',
+                overflowWrap: 'anywhere', // ⬅️ راه‌حل نهایی
               }}
             >
               {proj.full_name}
             </a>
 
+            {/* توضیحات */}
             <p
-              className="mt-2 text-gray-600 dark:text-gray-300 break-words max-w-full"
+              className="mt-2 text-gray-600 dark:text-gray-300"
               style={{
-                display: '-webkit-box',
-                WebkitLineClamp: 3,
-                WebkitBoxOrient: 'vertical',
-                overflow: 'hidden',
+                overflowWrap: 'anywhere',
               }}
             >
               {proj.description || 'No description available.'}
             </p>
 
+            {/* اطلاعات */}
             <div className="mt-3 flex flex-wrap items-center gap-4 text-gray-500 dark:text-gray-400 text-sm">
               <span className="flex items-center gap-1 whitespace-nowrap">
-                <Star className="w-4 h-4 text-yellow-500" />{' '}
+                <Star className="w-4 h-4 text-yellow-500" />
                 {proj.stars.toLocaleString()}
               </span>
               <span className="flex items-center gap-1 whitespace-nowrap">
-                <Calendar className="w-4 h-4" />{' '}
+                <Calendar className="w-4 h-4" />
                 {new Date(proj.last_updated).toLocaleDateString()}
               </span>
             </div>
 
+            {/* اطلاعات صاحب پروژه */}
             <a
               href={proj.owner.html_url}
               target="_blank"
