@@ -1,3 +1,26 @@
+'use client';
+
+import { useEffect, useState } from 'react';
+import { Star, Calendar, User } from 'lucide-react';
+
+export default function Github() {
+  const [projects, setProjects] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchProjects() {
+      try {
+        const res = await fetch('/api/github');
+        const data = await res.json();
+        setProjects(data);
+      } catch (err) {
+        console.error('Error fetching projects:', err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchProjects();
+  }, []);
 return (
   <div className="max-w-3xl mx-auto mt-10 p-4 sm:p-6 font-sans">
     <ul className="space-y-6">
