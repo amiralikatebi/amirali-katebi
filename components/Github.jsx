@@ -24,12 +24,16 @@ export default function Github() {
 
   if (loading)
     return (
-      <div className="text-center mt-20 text-lg font-medium px-4">Loading projects...</div>
+      <div className="text-center mt-20 text-lg font-medium px-4">
+        Loading projects...
+      </div>
     );
 
   if (!projects)
     return (
-      <div className="text-center mt-20 text-lg font-medium px-4">No projects found.</div>
+      <div className="text-center mt-20 text-lg font-medium px-4">
+        No projects found.
+      </div>
     );
 
   return (
@@ -44,19 +48,40 @@ export default function Github() {
               href={proj.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-xl font-semibold text-blue-600 hover:underline break-words"
+              className="text-xl font-semibold text-blue-600 hover:underline block max-w-full overflow-hidden break-words"
+              style={{
+                display: '-webkit-box',
+                WebkitLineClamp: 2,
+                WebkitBoxOrient: 'vertical',
+                overflow: 'hidden',
+              }}
             >
               {proj.full_name}
             </a>
-            <p className="mt-2 text-gray-600 dark:text-gray-300">{proj.description || 'No description available.'}</p>
+
+            <p
+              className="mt-2 text-gray-600 dark:text-gray-300 break-words max-w-full"
+              style={{
+                display: '-webkit-box',
+                WebkitLineClamp: 3,
+                WebkitBoxOrient: 'vertical',
+                overflow: 'hidden',
+              }}
+            >
+              {proj.description || 'No description available.'}
+            </p>
+
             <div className="mt-3 flex flex-wrap items-center gap-4 text-gray-500 dark:text-gray-400 text-sm">
               <span className="flex items-center gap-1 whitespace-nowrap">
-                <Star className="w-4 h-4 text-yellow-500" /> {proj.stars.toLocaleString()}
+                <Star className="w-4 h-4 text-yellow-500" />{' '}
+                {proj.stars.toLocaleString()}
               </span>
               <span className="flex items-center gap-1 whitespace-nowrap">
-                <Calendar className="w-4 h-4" /> {new Date(proj.last_updated).toLocaleDateString()}
+                <Calendar className="w-4 h-4" />{' '}
+                {new Date(proj.last_updated).toLocaleDateString()}
               </span>
             </div>
+
             <a
               href={proj.owner.html_url}
               target="_blank"
