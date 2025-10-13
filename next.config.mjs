@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  productionBrowserSourceMaps: false,
   images: {
     remotePatterns: [
       { hostname: "img.clerk.com" },
@@ -20,6 +21,11 @@ const nextConfig = {
     ],
   },
   pageExtensions: ["js", "jsx", "mdx"],
+    webpack: (config, { dev, isServer }) => {
+    config.devtool = false;
+
+    return config;
+  },
 };
 
 export default nextConfig;
