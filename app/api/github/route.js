@@ -11,7 +11,7 @@ export async function GET() {
 
   try {
     const response = await fetch(
-      'https://api.github.com/search/repositories?q=nextjs+pushed:>2024-04-01&sort=stars&order=desc&per_page=20',
+      'https://api.github.com/search/repositories?q=nextjs+OR+react+OR+python+OR+javascript+pushed:>2024-04-01&sort=stars&order=desc&per_page=20',
       {
         headers: {
           'User-Agent': 'MyApp',
