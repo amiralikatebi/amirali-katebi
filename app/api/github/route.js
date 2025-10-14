@@ -1,6 +1,6 @@
 let cache = null;
 let cacheTime = 0;
-const CACHE_DURATION = 10 * 60 * 1000; // 10 دقیقه
+const CACHE_DURATION = 5 * 60 * 1000;
 
 export async function GET() {
   const now = Date.now();
@@ -11,7 +11,7 @@ export async function GET() {
 
   try {
     const response = await fetch(
-      'https://api.github.com/search/repositories?q=nextjs+OR+react+OR+python+OR+javascript+pushed:>2024-04-01&sort=updated&order=desc&per_page=20',
+      'https://api.github.com/search/repositories?q=nextjs+OR+react+OR+python+OR+javascript+pushed:>2024-04-01&sort=stars&order=desc&per_page=20',
       {
         headers: {
           'User-Agent': 'MyApp',
