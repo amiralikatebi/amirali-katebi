@@ -44,20 +44,18 @@ export default function Github() {
             key={proj.id}
             className="p-6 rounded-xl shadow-md hover:shadow-lg transition duration-300 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700"
           >
-            {/* عنوان پروژه */}
             <a
               href={proj.url}
               target="_blank"
               rel="noopener noreferrer"
               className="text-xl font-semibold text-blue-600 hover:underline block"
               style={{
-                overflowWrap: 'anywhere', // ⬅️ راه‌حل نهایی
+                overflowWrap: 'anywhere',
               }}
             >
               {proj.full_name}
             </a>
 
-            {/* توضیحات */}
             <p
               className="mt-2 text-gray-600 dark:text-gray-300"
               style={{
@@ -67,7 +65,7 @@ export default function Github() {
               {proj.description || 'No description available.'}
             </p>
 
-            {/* اطلاعات */}
+
             <div className="mt-3 flex flex-wrap items-center gap-4 text-gray-500 dark:text-gray-400 text-sm">
               <span className="flex items-center gap-1 whitespace-nowrap">
                 <Star className="w-4 h-4 text-yellow-500" />
@@ -79,7 +77,6 @@ export default function Github() {
               </span>
             </div>
 
-            {/* اطلاعات صاحب پروژه */}
             <a
               href={proj.owner.html_url}
               target="_blank"

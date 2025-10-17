@@ -33,9 +33,13 @@ export const navigationItems = [
     href: "/message",
   },
   {
-    name: "Donate",
-    href: "/donate",
+    name: "Game",
+    href: "/game",
   },
+  // {
+  //   name: "Donate",
+  //   href: "/donate",
+  // },
 ];
 
 export default function Navbar({ page }) {
