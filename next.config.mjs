@@ -52,6 +52,7 @@ const withPWA = nextPWA({
   register: true,
   skipWaiting: true,
   clientsClaim: true,
+  fallbacks: { document: '/offline.html' },
 });
 
 export default withPWA(nextConfig);
