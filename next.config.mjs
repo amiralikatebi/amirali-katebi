@@ -1,5 +1,24 @@
+
+import nextPWA from 'next-pwa';
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  async headers() {
+    return [
+      {
+        source: '/',
+        headers: [
+          { key: 'X-Robots-Tag', value: 'index, follow' },
+        ],
+      },
+      {
+        source: '/((?!$).*)',
+        headers: [
+          { key: 'X-Robots-Tag', value: 'noindex, nofollow' },
+        ],
+      },
+    ];
+  },
   productionBrowserSourceMaps: false,
   images: {
     remotePatterns: [
@@ -21,11 +40,18 @@ const nextConfig = {
     ],
   },
   pageExtensions: ["js", "jsx", "mdx"],
-    webpack: (config, { dev, isServer }) => {
+  webpack: (config, { dev, isServer }) => {
     config.devtool = false;
-
     return config;
   },
 };
 
-export default nextConfig;
+const withPWA = nextPWA({
+  dest: 'public',
+  disable: process.env.NODE_ENV === 'development',
+  register: true,
+  skipWaiting: true,
+  clientsClaim: true,
+});
+
+export default withPWA(nextConfig);

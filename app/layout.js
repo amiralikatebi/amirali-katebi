@@ -25,13 +25,18 @@ export const metadata = {
     "Next.js",
     "Node.js",
   ],
+  icons: {
+    icon: "/icon.png",
+    shortcut: "/icon.png",
+    apple: "/icon.png",
+  },
   authors: [{ name: "Amirali Katebi" }],
   creator: "امیرعلی کاتبی",
   openGraph: {
     title: "Amirali Katebi | Full-Stack Developer",
     description:
       "Portfolio of Amirali Katebi, a full-stack developer creating efficient and enjoyable web experiences.",
-    url: "https://amirali-katebi.ir",
+    url: "https://amiralikatebi.ir",
     siteName: "Amirali Katebi",
   },
 };

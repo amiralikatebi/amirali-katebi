@@ -16,7 +16,7 @@ export default function GamePage() {
     const game = games[selectedGame];
     return (
       <div className="flex flex-col w-full lg:w-2/3 mx-auto mt-8">
-        <button onClick={() => setSelectedGame(null)} className="mb-4 px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300">Back to Games</button>
+        <button onClick={() => setSelectedGame(null)} className="mb-4 px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300 text-black">Back to Games</button>
         <h1 className="text-2xl font-bold mb-4">{game.title}</h1>
         <div className="p-4 border rounded-lg bg-white shadow-sm">
           {game.component}
