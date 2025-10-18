@@ -1,5 +1,5 @@
 import MotionDivWrapper from "@/components/MotionDivWrapper";
-import { getBlogs } from "@/lib/blog";
+// import { getBlogs } from "@/lib/blog";
 import Hero from "@/components/Hero";
 import SkillsBar from "@/components/SkillsBar";
 import RecentUpdate from "@/components/RecentUpdate";
